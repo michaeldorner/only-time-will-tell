@@ -1,6 +1,3 @@
-import json
-import pandas as pd
-import json
 from tqdm import tqdm
 from datetime import datetime
 
@@ -32,15 +29,13 @@ def time_respecting_horizons(bipartite_graph, nodes, seed_time, node_presence_at
     return horizons
 
 
-def run(name: str, consider_time: list, cache: bool = False):
-    for b in consider_time:
-        if b:
+def run(consider_time: list):
+    for is_time_respecting in consider_time:
+        horizons = {}
+        if is_time_respecting:
             horizons = time_respecting_horizons(
                 model.bipartite_graph, model.participants, datetime(2020, 1, 1), 'end')
         else:
             horizons = time_ignoring_horizons(
                 model.bipartite_graph, model.participants)
-        io.store_horizons(horizons, is_time_respecting=b,
-                          dir_name=name)
-        # io.store_horizon_cardinalities(
-        #   {k: len(horizons[k]) for k in horizons}, is_time_respecting = b, dir_name = name)
+        io.store_horizons(horizons, is_time_respecting)

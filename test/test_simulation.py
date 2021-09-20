@@ -1,4 +1,3 @@
-from datetime import datetime
 import unittest
 from simulation import simulation
 import networkx as nx

@@ -3,12 +3,6 @@ from simulation.data import io
 import os
 
 
-class HDFParamsTest(unittest.TestCase):
-    def test_create_file_name(self):
-        t = io._create_file_name(True, 'test', 'test')
-        self.assertEqual(t, os.path.join(
-            io._data_dir, 'test', 'time_respecting_test'))
-
 
 # class IOStoreCardinalityTest(unittest.TestCase):
 #     def setUp(self):

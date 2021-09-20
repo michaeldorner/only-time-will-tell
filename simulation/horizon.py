@@ -19,10 +19,10 @@ def time_ignoring(B: nx.Graph, node, check_bipartite: bool = False) -> set:
     return seen_nodes - {node}
 
 
-def time_respecting(B: nx.Graph, node, time, node_presence_attr, check_bipartite: bool = False) -> dict:
+def time_respecting(B: nx.Graph, node, seed_time, node_presence_attr: str = 'end', check_bipartite: bool = False) -> dict:
     if check_bipartite and not nx.is_bipartite(B):
         raise Exception('B is not a bipartite graph')
-    seen_nodes: dict = {node: time}
+    seen_nodes: dict = {node: seed_time}
     stack: set = {node}
     while stack:
         n = stack.pop()
