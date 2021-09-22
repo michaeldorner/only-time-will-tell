@@ -2,6 +2,20 @@ import unittest
 from simulation.data import io
 import os
 
+class IOFileNameTest(unittest.TestCase):
+    def test_file_name(self):
+        with self.subTest():
+            file_name = io._create_file_name(is_time_respecting=True, postfix_name='horizon.json')
+            self.assertEquals(file_name, os.path.join(io._data_dir, 'time_respecting_horizon.json'))
+        with self.subTest():
+            file_name = io._create_file_name(is_time_respecting=False, postfix_name='horizon.json')
+            self.assertEquals(file_name, os.path.join(io._data_dir, 'time_ignoring_horizon.json'))
+
+
+class IOParameterTest(unittest.TestCase):
+    def test_load_simulation_parameters(self):
+        params = io.load_simulation_parameters()
+        self.assertEqual(len(list(params)), 309740)
 
 
 # class IOStoreCardinalityTest(unittest.TestCase):

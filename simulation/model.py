@@ -3,7 +3,7 @@ from datetime import datetime
 from .data import io
 
 
-def __load_bipartite_graph(raw_data: dict, participants: set, channels: set) -> nx.Graph:
+def _load_bipartite_graph(raw_data: dict, participants: set, channels: set) -> nx.Graph:
     bipartite_graph = nx.Graph()
     bipartite_graph.add_nodes_from(participants, bipartite='participants')
     bipartite_graph.add_nodes_from(channels, bipartite='channels')
@@ -21,5 +21,5 @@ simulation_parameters = io.load_simulation_parameters()
 participants = {participant for channel in simulation_parameters.values()
                 for participant in channel['participants']}
 channels = set(simulation_parameters.keys())
-bipartite_graph = __load_bipartite_graph(
+bipartite_graph = _load_bipartite_graph(
     simulation_parameters, participants, channels)
