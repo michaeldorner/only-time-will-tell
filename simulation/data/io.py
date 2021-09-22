@@ -39,12 +39,7 @@ def load_horizons(is_time_respecting: bool, time_parsing: bool, postfix_name: st
     with open(_create_file_name(is_time_respecting, postfix_name), 'r') as f:
         d = json.loads(f.read())
     if time_parsing and is_time_respecting:
-        for k in (d):
+        for k in d:
             for kk in d[k]:
                 d[k][kk] = datetime.datetime.fromisoformat(d[k][kk])
-    else:
-        return d
-    if is_time_respecting:
-        return {k: {kk: datetime.datetime.fromisoformat(d[k][kk]) for kk in d[k]} for k in d}
-    else:
-        return {k: {kk for kk in d[k]} for k in d}
+    return d
