@@ -1,4 +1,5 @@
 # Only Time Will Tell: Replication package
 
-[![CodeCov](https://github.com/michaeldorner/only-time-will-tell/actions/workflows/main.yml/badge.svg)](https://github.com/michaeldorner/only-time-will-tell/actions/workflows/main.yml)
-[![codecov](https://codecov.io/gh/michaeldorner/only-time-will-tell/branch/main/graph/badge.svg?token=1LFXZ84UV7)](https://codecov.io/gh/michaeldorner/only-time-will-tell)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/michaeldorner/only-time-will-tell/CI)
+![Codecov](https://img.shields.io/codecov/c/github/michaeldorner/only-time-will-tell)
+![Codacy grade](https://img.shields.io/codacy/grade/bc4bb89d16074ad981365c00e6a8ed5c)
