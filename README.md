@@ -9,7 +9,7 @@ The simulation code for the publication "Only Time Will Tell: Only Time Will Tel
 
 ## Prerequisites
 
-We recommend at least 50 GB storage and 16 GB RAM recommended. On a server with AMD EPYC 7302P 16 core, 256 GB RAM, and SSD, the simulation takes about ten hours. 
+We recommend at least 50 GB storage and 16 GB RAM. On a server with AMD EPYC 7302P 16 core, 256 GB RAM, and SSD, the simulation takes about ten hours. 
 We require Python 3.7 or higher. Install all dependencies via `pip3 install -r requirements.txt`
 
 ## Simulation
