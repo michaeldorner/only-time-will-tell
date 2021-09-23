@@ -19,4 +19,5 @@ if __name__ == '__main__':
         consider_time = [False]
     elif not args.time_ignoring_only and args.time_respecting_only:
         consider_time = [True]
+
     simulation.run(consider_time, args.skip_storing_horizon)
