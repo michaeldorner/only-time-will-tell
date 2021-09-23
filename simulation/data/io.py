@@ -1,9 +1,9 @@
-from datetime import datetime, time
+from datetime import datetime
 import os
-import orjson # for encoding because of performance
-import json # for decoding because of scalability
+import orjson
 
 _data_dir = os.path.dirname(os.path.abspath(__file__))
+
 
 def _create_file_name(is_time_respecting: bool, postfix_name: str):
     file_name = {
@@ -34,12 +34,7 @@ def store_horizons(horizons, is_time_respecting: bool, postfix_name: str = 'hori
         f.write(b)
 
 
-def load_horizons(is_time_respecting: bool, time_parsing: bool, postfix_name: str = 'horizons.json') -> dict:
-    print('The loading can take several minutes')
-    with open(_create_file_name(is_time_respecting, postfix_name), 'r') as f:
-        d = json.loads(f.read())
-    if time_parsing and is_time_respecting:
-        for k in d:
-            for kk in d[k]:
-                d[k][kk] = datetime.datetime.fromisoformat(d[k][kk])
-    return d
+def store_horizon_cardinalities(horizons, is_time_respecting: bool, postfix_name: str = 'horizon_cardinalities.json'):
+    b = orjson.dumps({k: len(horizons[k]) for k in horizons})
+    with open(_create_file_name(is_time_respecting, postfix_name), 'wb') as f:
+        f.write(b)

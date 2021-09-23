@@ -29,7 +29,7 @@ def time_respecting_horizons(bipartite_graph, nodes, seed_time, node_presence_at
     return horizons
 
 
-def run(consider_time: list):
+def run(consider_time: list, skip_storing_horizon: bool):
     for is_time_respecting in consider_time:
         horizons = {}
         if is_time_respecting:
@@ -38,4 +38,6 @@ def run(consider_time: list):
         else:
             horizons = time_ignoring_horizons(
                 model.bipartite_graph, model.participants)
-        io.store_horizons(horizons, is_time_respecting)
+        if not skip_storing_horizon:
+            io.store_horizons(horizons, is_time_respecting)
+        io.store_horizon_cardinalities(horizons, is_time_respecting)
