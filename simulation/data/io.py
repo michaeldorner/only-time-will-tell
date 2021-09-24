@@ -29,12 +29,13 @@ def store_horizons(horizons, is_time_respecting: bool, postfix_name: str = 'hori
         if isinstance(obj, set):
             return {o: None for o in obj}
         raise TypeError
-    b = orjson.dumps(horizons, default=_default)
+    b = orjson.dumps(horizons, default=_default, option=orjson.OPT_SORT_KEYS)
     with open(_create_file_name(is_time_respecting, postfix_name), 'wb') as f:
         f.write(b)
 
 
 def store_horizon_cardinalities(horizons, is_time_respecting: bool, postfix_name: str = 'horizon_cardinalities.json'):
-    b = orjson.dumps({k: len(horizons[k]) for k in horizons})
+    b = orjson.dumps({k: len(horizons[k])
+                     for k in horizons}, option=orjson.OPT_SORT_KEYS)
     with open(_create_file_name(is_time_respecting, postfix_name), 'wb') as f:
         f.write(b)
