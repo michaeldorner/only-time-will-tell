@@ -21,3 +21,5 @@ We require Python 3.7 or higher. Install all dependencies via `pip3 install -r r
 ## Tests
 
 `python3 -m unittest discover` runs all tests. 
+
+The outputs are reproducable and hashable: Verify the files by using hashes such as `sha256sum`.
