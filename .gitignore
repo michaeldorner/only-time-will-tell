@@ -130,4 +130,4 @@ dmypy.json
 .DS_Store
 
 # do not commit JSON files
-.json
+*.json
