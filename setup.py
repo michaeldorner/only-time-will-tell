@@ -6,5 +6,5 @@ setup(name='Only Time Will Tell - Simulation',
       author='Michael Dorner',
       author_email='michael.dorner@bth.se',
       url='https://github.com/michaeldorner/only-time-till-tell',
-      python_requires=">=3.6",
+      python_requires=">=3.7",
       )
