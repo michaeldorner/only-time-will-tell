@@ -39,4 +39,28 @@ All compuations and simulations are execuatable Python scripts. This allows us t
 
 We use JSON to store the results of our simulation despite its limitation (i.e., no native time or set type) because it is widely adopted and allows dictionary-like data (in contrast to table-like data formats such as HDF5 or Apache Arrow). Python's internal serialization module `pickle` was rejected due to its inherent security issues and bad performance. 
 
+## Code snippetts
+
+### Load horizon
+
+```
+import json
+prefix = 'time_ignoring' # or 'time_respecting' 
+
+with open(prefix + '_horizons.json', 'r') as f:
+    data = json.load(f)
+```
+
+### Store the horizon to cardinality
+
+```
+import json
+prefix = 'time_ignoring' # or 'time_respecting' 
+
+with open(prefix + '_horizons.json', 'r') as f:
+    data = json.load(f)
+  
+with open(prefix + '_horizon_cardinalities.json', 'w') as f:
+    json.dump({k: len(data[k]) for k in data}, f)
+```
 
