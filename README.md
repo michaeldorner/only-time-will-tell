@@ -39,7 +39,7 @@ All compuations and simulations are execuatable Python scripts. This allows us t
 
 We use JSON to store the results of our simulation despite its limitation (i.e., no native time or set type) because it is widely adopted and allows dictionary-like data (in contrast to table-like data formats such as HDF5 or Apache Arrow). Python's internal serialization module `pickle` was rejected due to its inherent security issues and bad performance. 
 
-## Code snippetts
+## Code snippets
 
 ### Load horizon
 
