@@ -19,7 +19,7 @@ We recommend at least 50 GB storage and 16 GB RAM. On a server with AMD EPYC 730
 We require Python 3.7 or higher. Install all dependencies via ```pip3 install -r requirements.txt```. 
 
 
-## Simulation
+## Run simulation
 
 1. Download or pull this repository
 2. `cd only-time-will-tell` (or the directory it is stored)
