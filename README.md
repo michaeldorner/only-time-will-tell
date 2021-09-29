@@ -19,7 +19,7 @@ We recommend at least 50 GB storage and 16 GB RAM. On a server with AMD EPYC 730
 We require Python 3.7 or higher. Install all dependencies via ```pip3 install -r requirements.txt```. 
 
 
-## Simulation
+## Run simulation
 
 1. Download or pull this repository
 2. `cd only-time-will-tell` (or the directory it is stored)
@@ -35,9 +35,9 @@ The outputs are reproducable and hashable: Verify the files by using hashes such
 
 ## Design decisions
 
-All compuations and simulations are execuatable Python scripts. This allows us to test the code properly. Only the visualization is a jupyter notebook and not tested. 
+All compuations and simulations are execuatable Python scripts. This allows us to test the code properly. Only the visualization is a jupyter notebook and not covered by our test setup. 
 
-We use JSON to store the results of our simulation despite its limitation (i.e., no native time or set type) because it is widely adopted and allows dictionary-like data (in contrast to table-like data formats such as HDF5 or Apache Arrow). Python's internal serialization module `pickle` was rejected due to its inherent security issues and bad performance. 
+We use JSON to store the results of our simulation despite its limitation (i.e., no native time or set type) because it is widely adopted and allows dictionary-like data (in contrast to table-like data formats such as HDF5 or Apache Arrow). Python's internal serialization module `pickle` was rejected due to its inherent security issues and bad performance. Since JSON does not support sets, we used JSON objects mapping to `none` for time-ignoring horizons and to strings representing the timestamp in ISO format for time-respecting horizons.  
 
 ## Code snippets
 
