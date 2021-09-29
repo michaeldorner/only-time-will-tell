@@ -46,11 +46,21 @@ We use JSON to store our simulation results despite its limitation (i.e., no nat
 
 ```
 import json
+
 prefix = 'time_ignoring' # or 'time_respecting' 
 
 with open(prefix + '_horizons.json', 'r') as f:
     data = json.load(f)
 ```
+
+The data so far is not typed. We highly recommend to use typed data:
+
+```
+import datetime
+
+horizons = {n: {l: datetime.datetime.fromisoformat(data[n][l]) for l in data[n]} for n in tqdm.tqdm(data)}
+```
+We recommend `tqdm` to show a progress bar. Feel free to replace `tqdm.tqdm(data)` with `data` only otherwise.  
 
 ### Store the horizon to cardinality
 
