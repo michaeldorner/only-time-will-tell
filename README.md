@@ -15,7 +15,7 @@ Our results can be found on Zenodo.
 
 ## Prerequisites
 
-We recommend at least 50 GB storage and 16 GB RAM. On a server with AMD EPYC 7302P 16 core, 256 GB RAM, and SSD, the simulation takes about ten hours. 
+We recommend at least 50 GB storage and 16 GB RAM. The simulation takes about ten hours on a server with AMD EPYC 7302P 16 core, 256 GB RAM, and SSD. 
 We require Python 3.7 or higher. Install all dependencies via ```pip3 install -r requirements.txt```. 
 
 
@@ -30,14 +30,15 @@ We require Python 3.7 or higher. Install all dependencies via ```pip3 install -r
 
 `python3 -m unittest discover` runs all tests. 
 
-The outputs are reproducable and hashable: Verify the files by using hashes such as `sha256sum`.
+The outputs are reproducible and hashable: Verify the files by using hashes such as `sha256sum`.
 
 
 ## Design decisions
 
-All compuations and simulations are execuatable Python scripts. This allows us to test the code properly. Only the visualization is a jupyter notebook and not covered by our test setup. 
+All computations and simulations are executable Python scripts that allow test the code thoroughly and run it quickly via the command line. Only the visualization is a jupyter notebook and not covered by our test setup.
 
-We use JSON to store the results of our simulation despite its limitation (i.e., no native time or set type) because it is widely adopted and allows dictionary-like data (in contrast to table-like data formats such as HDF5 or Apache Arrow). Python's internal serialization module `pickle` was rejected due to its inherent security issues and bad performance. Since JSON does not support sets, we used JSON objects mapping to `none` for time-ignoring horizons and to strings representing the timestamp in ISO format for time-respecting horizons.  
+We use JSON to store our simulation results despite its limitation (i.e., no native time or set type) because it is widely adopted and allows dictionary-like data (in contrast to table-like data formats such as HDF5 or Apache Arrow). We decide against Python's internal serialization module pickle due to its inherent security issues and lousy performance. Since JSON does not support sets, we used JSON objects mapping to none for time-ignoring horizons and to strings representing the timestamp in ISO format for time-respecting horizons.
+
 
 ## Code snippets
 
@@ -45,11 +46,21 @@ We use JSON to store the results of our simulation despite its limitation (i.e.,
 
 ```
 import json
+
 prefix = 'time_ignoring' # or 'time_respecting' 
 
 with open(prefix + '_horizons.json', 'r') as f:
     data = json.load(f)
 ```
+
+The data so far is not typed. We highly recommend to use typed data:
+
+```
+import datetime
+
+horizons = {n: {l: datetime.datetime.fromisoformat(data[n][l]) for l in data[n]} for n in tqdm.tqdm(data)}
+```
+We recommend `tqdm` to show a progress bar. Feel free to replace `tqdm.tqdm(data)` with `data` only otherwise.  
 
 ### Store the horizon to cardinality
 
