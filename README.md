@@ -18,6 +18,8 @@ Our results can be found on Zenodo.
 We recommend at least 50 GB storage and 16 GB RAM. The simulation takes about ten hours on a server with AMD EPYC 7302P 16 core, 256 GB RAM, and SSD. 
 We require Python 3.7 or higher. Install all dependencies via ```pip3 install -r requirements.txt```. 
 
+If you would like to create or change the plots, please install and use `jupyter`.
+
 
 ## Run simulation
 
@@ -30,7 +32,7 @@ We require Python 3.7 or higher. Install all dependencies via ```pip3 install -r
 
 `python3 -m unittest discover` runs all tests. 
 
-The outputs are reproducible and hashable: Verify the files by using hashes such as `sha256sum`.
+The outputs are reproducible and hashable: Verify the files by using hashes such as `sha256sum`. The plots can be reproduced by the jupyter notebook in the folder `notebooks`. 
 
 
 ## Design decisions
