@@ -6,15 +6,15 @@ def time_ignoring(B: nx.Graph, node, check_bipartite: bool = False) -> set:
         raise Exception('B is not a bipartite graph')
     seen_nodes: set = set()
     seen_neighbors: set = set()
-    next: set = {node}
-    while next:
-        n = next.pop()
+    next_nodes: set = {node}
+    while next_nodes:
+        n = next_nodes.pop()
         for neighbor in B.neighbors(n):
             if neighbor not in seen_neighbors:
                 for neighborneighbor in B.neighbors(neighbor):
                     if neighborneighbor not in seen_nodes:
                         seen_nodes.add(neighborneighbor)
-                        next.add(neighborneighbor)
+                        next_nodes.add(neighborneighbor)
                 seen_neighbors.add(neighbor)
     return seen_nodes - {node}
 
