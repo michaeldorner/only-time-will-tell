@@ -32,7 +32,21 @@ If you would like to create or change the plots, please install and use `jupyter
 
 `python3 -m unittest discover` runs all tests. 
 
-The outputs are reproducible and hashable: Verify the files by using hashes such as `sha256sum`. The plots can be reproduced by the jupyter notebook in the folder `notebooks`. 
+The outputs are reproducible and hashable: Verify the files by using hashes such as SHA256. The plots can be reproduced by the jupyter notebook in the folder `notebooks`. 
+
+To verify the results run
+
+```
+shasum -a 256 simulation/data/time_*.json                      
+```
+and compare the hash values of our results:
+
+```
+d77f8ff2affad4e9fbc2375a7ecaccc7af0fe5f3fc1ea7eb7180af4410e748bd  simulation/data/simulation_parameters.json
+4a6b2e596f24a3f00784851789cc0244f3688c1a01316e0aef96b0b7add233a3  simulation/data/time_ignoring_horizon_cardinalities.json
+...
+```
+
 
 
 ## Design decisions
