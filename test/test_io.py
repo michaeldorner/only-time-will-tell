@@ -24,7 +24,32 @@ class IOParameterTest(unittest.TestCase):
         self.assertEqual(len(list(params)), 309740)
 
 
-class IOStoreTest(unittest.TestCase):
+class IOStoreHorizonsTest(unittest.TestCase):
+
+    def setUp(self):
+        self.postfix_name = 'horizons_test.json'
+        self.file_name = io._create_file_name(
+            is_time_respecting=True, postfix_name=self.postfix_name)
+
+    def test_store_time_respecting_horizons(self):
+        horizons = {'a': {'b': 1, 'c': 2}, 'd': {}}
+        io.store_horizons(
+            horizons, True, self.postfix_name)
+
+        with self.subTest():
+            self.assertTrue(os.path.exists(self.file_name))
+
+        with self.subTest():
+            with open(self.file_name, 'r') as f:
+                horizons_written = json.load(f)
+            self.assertEqual(horizons, horizons_written)
+
+    def tearDown(self):
+        if os.path.exists(self.file_name):
+            os.remove(self.file_name)
+
+
+class IOStoreCardinalitiesTest(unittest.TestCase):
 
     def setUp(self):
         self.postfix_name = 'horizon_cardinalities_test.json'
@@ -48,45 +73,3 @@ class IOStoreTest(unittest.TestCase):
     def tearDown(self):
         if os.path.exists(self.file_name):
             os.remove(self.file_name)
-
-
-# class IOStoreCardinalityTest(unittest.TestCase):
-#     def setUp(self):
-#         self.file_name = 'test_horizon_cardinalities.hdf'
-#         self.file_path = os.path.join(io._data_dir, self.file_name)
-
-#     def tearDown(self):
-#         os.remove(self.file_path)
-
-#     def test_store_cardinality(self):
-#         io.store_horizon_cardinalities({1: 1}, True, self.file_name)
-#         self.assertTrue(os.path.exists(self.file_path))
-
-
-# class IOLoadCardinalityTest(unittest.TestCase):
-#     def setUp(self):
-#         self.file_name = 'test_horizon_cardinalities.hdf'
-#         self.file_path = os.path.join(io._data_dir, self.file_name)
-#         io.store_horizon_cardinalities({1: 1}, False, self.file_name)
-#         assert os.path.exists(
-#             self.file_path), 'Horizon cardinalities are not created.'
-
-#     def tearDown(self):
-#         os.remove(self.file_path)
-
-#     def test_load_horizon_cardinality(self):
-#         s = io.load_horizon_cardinalities(False, self.file_name)
-#         self.assertEqual(s.size, 1)
-
-
-# class IOStoreHorizonTest(unittest.TestCase):
-#     def setUp(self):
-#         self.file_name = 'test_horizons.hdf'
-#         self.file_path = os.path.join(io._data_dir, self.file_name)
-
-#     def tearDown(self):
-#         os.remove(self.file_path)
-
-#     def test_store_cardinality(self):
-#         io.store_horizons({1: {1}}, False, self.file_name)
-#         self.assertTrue(os.path.exists(self.file_path))
