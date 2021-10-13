@@ -15,8 +15,7 @@ Our results can be found on Zenodo.
 
 ## Prerequisites
 
-We recommend at least 50 GB storage and 16 GB RAM. The simulation takes about ten hours on a server with AMD EPYC 7302P 16 core, 256 GB RAM, and SSD. 
-We require Python 3.7 or higher. Install all dependencies via ```pip3 install -r requirements.txt```. 
+We recommend at least 50 GB storage, minimum 16 GB RAM, and a powerful CPU for the running the full simulation (for options see next section). We require Python 3.7 or higher. Install all dependencies via ```pip3 install -r requirements.txt```. 
 
 If you would like to create or change the plots, please install and use `jupyter`.
 
@@ -27,12 +26,29 @@ If you would like to create or change the plots, please install and use `jupyter
 2. `cd only-time-will-tell` (or the directory it is stored)
 3. `python3 -m simulation` to run the simulation. With the optional ```--time_ignoring_only``` and ```--time_respecting_only``` you can run the simulation with the time-ignoring model or time-respecting model, respectively.
 
+Although highly hardware-dependent, the simulation with ```--time_ignoring_only``` takes 10-45 minutes, with ```--time_respecting_only``` 8-24 hours. 
+
 
 ## Tests and verification
 
 `python3 -m unittest discover` runs all tests. 
 
-The outputs are reproducible and hashable: Verify the files by using hashes such as `sha256sum`. The plots can be reproduced by the jupyter notebook in the folder `notebooks`. 
+The outputs are reproducible and hashable: Verify the files by using hashes such as SHA256. The plots can be reproduced by the jupyter notebook in the folder `notebooks`. 
+
+To verify the results run
+
+```
+shasum -a 256 simulation/data/time_*.json                      
+```
+and compare the hash values of our results:
+
+```
+4a6b2e596f24a3f00784851789cc0244f3688c1a01316e0aef96b0b7add233a3  simulation/data/time_ignoring_horizon_cardinalities.json
+d455f1e37237014830fa9aaca76232594c92c193c241b71ca28ec69969163daf  simulation/data/time_ignoring_horizons.json
+a07356ef7bf8b8af152e95857c39cbb8138c63ad110f455a309083545b94cbb5  simulation/data/time_respecting_horizon_cardinalities.json
+8722f82d2cb9e1c1947baa3c8ff9239d2faed6deae56469114a364e2c2649832  simulation/data/time_respecting_horizons.json
+```
+
 
 
 ## Design decisions
