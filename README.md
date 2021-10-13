@@ -15,8 +15,7 @@ Our results can be found on Zenodo.
 
 ## Prerequisites
 
-We recommend at least 50 GB storage and 16 GB RAM. The simulation takes about ten hours on a server with AMD EPYC 7302P 16 core, 256 GB RAM, and SSD. 
-We require Python 3.7 or higher. Install all dependencies via ```pip3 install -r requirements.txt```. 
+We recommend at least 50 GB storage, minimum 16 GB RAM, and a powerful CPU for the running the full simulation (for options see next section). We require Python 3.7 or higher. Install all dependencies via ```pip3 install -r requirements.txt```. 
 
 If you would like to create or change the plots, please install and use `jupyter`.
 
