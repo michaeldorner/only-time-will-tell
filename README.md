@@ -4,6 +4,7 @@
 [![Codecov](https://img.shields.io/codecov/c/github/michaeldorner/only-time-will-tell)](https://app.codecov.io/gh/michaeldorner/only-time-will-tell)
 [![Codacy grade](https://img.shields.io/codacy/grade/bc4bb89d16074ad981365c00e6a8ed5c)](https://app.codacy.com/gh/michaeldorner/only-time-will-tell/dashboard)
 [![GitHub](https://img.shields.io/github/license/michaeldorner/only-time-will-tell)](./LICENSE)
+[![GitHub](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.5568875-brightgreen)](https://zenodo.org/record/5568875)
 
 The simulation code for the publication "Only Time Will Tell: Only Time Will Tell: Modelling Communication for Information Diffusion in Software Engineering"
 
