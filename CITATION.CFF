@@ -1,0 +1,11 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Michael"
+  given-names: "Dorner"
+  orcid: "https://orcid.org/0000-0001-8879-6450"
+title: "Only Time Will Tell"
+version: 1.0.0
+doi: 10.5281/zenodo.1234
+date-released: 2021-10-25
+url: "https://github.com/michaeldorner/only-time-will-tell"
