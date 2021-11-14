@@ -8,8 +8,9 @@ def abs_dir_path(file):
 
 
 def validate_file(string):
-    if os.path.isfile(string):
-        return string
+    path = Path(string).absolute()
+    if path.is_file():
+        return path
     else:
         raise FileNotFoundError(string)
 
