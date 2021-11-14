@@ -1,22 +1,23 @@
 import unittest
 from simulation import io
+from pathlib import Path
 import os
 
 
 class IODirectoryValidationTest(unittest.TestCase):
     def test_invalid_file(self):
         self.assertRaises(FileNotFoundError,
-                          io.validate_file, '!NOTEXISTING!')
+                          io.validate_file, '0.json')
 
     def test_valid_file(self):
-        self.assertEqual(io.validate_file(__file__), __file__)
+        self.assertEqual(io.validate_file(__file__), Path(__file__).absolute())
 
     def test_invalid_directory(self):
         self.assertRaises(NotADirectoryError,
-                          io.validate_directory, '!NOTEXISTING!')
+                          io.validate_directory, '0')
 
     def test_valid_directory(self):
-        self.assertEqual(io.validate_directory('.'), '.')
+        self.assertEqual(io.validate_directory('.'), Path('.').absolute())
 
 
 class IODecodeResultTest(unittest.TestCase):
@@ -43,7 +44,7 @@ class IODecodeResultTest(unittest.TestCase):
 class IOStoreResultTest(unittest.TestCase):
     def setUp(self):
         super().setUp()
-        self.test_file_path = './time_respecting_test.json'
+        self.test_file_path = Path('./time_respecting_test.json').absolute()
 
     def test_store_result(self):
         postfix_name = 'test.json'
@@ -53,5 +54,5 @@ class IOStoreResultTest(unittest.TestCase):
         self.assertEqual(content, '{"a":{}}')
 
     def tearDown(self):
-        if os.path.exists(self.test_file_path):
+        if self.test_file_path.exists():
             os.remove(self.test_file_path)

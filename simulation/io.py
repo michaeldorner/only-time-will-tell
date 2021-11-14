@@ -1,6 +1,10 @@
-import os
 import orjson
 from datetime import datetime
+from pathlib import Path
+
+
+def abs_dir_path(file):
+    return Path(file).parent.absolute()
 
 
 def validate_file(string):
@@ -11,8 +15,9 @@ def validate_file(string):
 
 
 def validate_directory(string: str):
-    if os.path.isdir(string):
-        return string
+    path = Path(string).absolute()
+    if path.is_dir():
+        return path
     else:
         raise NotADirectoryError(string)
 
@@ -40,6 +45,6 @@ def store_result(result: dict, out_dir: str, is_time_respecting: bool, postfix_n
         True: 'time_respecting_',
         False: 'time_ignoring_'
     }[is_time_respecting] + postfix_name
-
-    with open(os.path.join(out_dir, file_name), 'wb') as f:
+    file_path = Path(out_dir) / file_name
+    with open(file_path, 'wb') as f:
         f.write(decode_result(result))
