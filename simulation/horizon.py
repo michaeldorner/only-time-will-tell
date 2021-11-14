@@ -1,17 +1,12 @@
-import networkx as nx
-
-
-def time_ignoring(B: nx.Graph, node, check_bipartite: bool = False) -> set:
-    if check_bipartite and not nx.is_bipartite(B):
-        raise Exception('B is not a bipartite graph')
+def time_ignoring(neighbors: dict, node) -> set:
     seen_nodes: set = set()
     seen_neighbors: set = set()
     next_nodes: set = {node}
     while next_nodes:
         n = next_nodes.pop()
-        for neighbor in B.neighbors(n):
+        for neighbor in neighbors[n]:
             if neighbor not in seen_neighbors:
-                for neighborneighbor in B.neighbors(neighbor):
+                for neighborneighbor in neighbors[neighbor]:
                     if neighborneighbor not in seen_nodes:
                         seen_nodes.add(neighborneighbor)
                         next_nodes.add(neighborneighbor)
@@ -19,17 +14,15 @@ def time_ignoring(B: nx.Graph, node, check_bipartite: bool = False) -> set:
     return seen_nodes - {node}
 
 
-def time_respecting(B: nx.Graph, node, seed_time, node_presence_attr: str = 'end', check_bipartite: bool = False) -> dict:
-    if check_bipartite and not nx.is_bipartite(B):
-        raise Exception('B is not a bipartite graph')
+def time_respecting(neighbors: dict, edge_availability: dict, node, seed_time) -> dict:
     seen_nodes: dict = {node: seed_time}
     stack: set = {node}
     while stack:
         n = stack.pop()
-        for neighbor in B.neighbors(n):
-            t = B.nodes[neighbor][node_presence_attr]
+        for neighbor in neighbors[n]:
+            t = edge_availability[neighbor]
             if seen_nodes[n] < t:
-                for neighborneighbor in B.neighbors(neighbor):
+                for neighborneighbor in neighbors[neighbor]:
                     if neighborneighbor not in seen_nodes or t < seen_nodes[neighborneighbor]:
                         seen_nodes[neighborneighbor] = t
                         stack.add(neighborneighbor)

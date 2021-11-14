@@ -1,26 +1,22 @@
 import unittest
-from simulation.data import io
+from simulation import io
 import os
 
 
-class IOFileNameTest(unittest.TestCase):
-    def test_file_name(self):
-        with self.subTest():
-            file_name = io.absolute_file_path(
-                is_time_respecting=True, postfix_name='horizon.json')
-            self.assertEqual(file_name, os.path.join(
-                io._data_dir, 'time_respecting_horizon.json'))
-        with self.subTest():
-            file_name = io.absolute_file_path(
-                is_time_respecting=False, postfix_name='horizon.json')
-            self.assertEqual(file_name, os.path.join(
-                io._data_dir, 'time_ignoring_horizon.json'))
+class IODirectoryValidationTest(unittest.TestCase):
+    def test_invalid_file(self):
+        self.assertRaises(FileNotFoundError,
+                          io.validate_file, '!NOTEXISTING!')
 
+    def test_valid_file(self):
+        self.assertEqual(io.validate_file(__file__), __file__)
 
-class IOParameterTest(unittest.TestCase):
-    def test_load_simulation_parameters(self):
-        params = io.load_simulation_parameters()
-        self.assertEqual(len(list(params)), 309740)
+    def test_invalid_directory(self):
+        self.assertRaises(NotADirectoryError,
+                          io.validate_directory, '!NOTEXISTING!')
+
+    def test_valid_directory(self):
+        self.assertEqual(io.validate_directory('.'), '.')
 
 
 class IODecodeResultTest(unittest.TestCase):
@@ -45,15 +41,17 @@ class IODecodeResultTest(unittest.TestCase):
 
 
 class IOStoreResultTest(unittest.TestCase):
+    def setUp(self):
+        super().setUp()
+        self.test_file_path = './time_respecting_test.json'
+
     def test_store_result(self):
         postfix_name = 'test.json'
-        io.store_result({'a': set()}, True, postfix_name)
-        test_file_path = io.absolute_file_path(True, postfix_name)
-        with open(test_file_path, 'r') as f:
+        io.store_result({'a': set()}, './', True, postfix_name)
+        with open(self.test_file_path, 'r') as f:
             content = f.read()
         self.assertEqual(content, '{"a":{}}')
 
     def tearDown(self):
-        test_file_path = io.absolute_file_path(True, 'test.json')
-        if os.path.exists(test_file_path):
-            os.remove(test_file_path)
+        if os.path.exists(self.test_file_path):
+            os.remove(self.test_file_path)
