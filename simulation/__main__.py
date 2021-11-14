@@ -44,9 +44,8 @@ if __name__ == '__main__':
         else:
             horizons = simulation.time_ignoring_horizons(cn)
         if args.skip_storing_horizons is False:
-            file_name = io.create_file_name('horizons', is_time_respecting)
-            file_path = io.join_path_components(args.out_dir, file_name)
-            io.store_result(horizons, file_path)
+            io.store_result(horizons, args.out_dir,
+                            is_time_respecting, 'horizons.json')
 
-        io.store_result({k: len(horizons[k]) for k in horizons}, args.out_dir, is_time_respecting,
-                        'horizon_cardinalities.json')
+        io.store_result({k: len(horizons[k]) for k in horizons},
+                        args.out_dir, is_time_respecting, 'horizon_cardinalities.json')
