@@ -27,7 +27,7 @@ If you would like to create or change the plots, please install and use `jupyter
 2. `cd only-time-will-tell` (or the directory it is stored)
 3. `python3 -m simulation` to run the simulation. With the optional ```--time_ignoring_only``` and ```--time_respecting_only``` you can run the simulation with the time-ignoring model or time-respecting model, respectively.
 
-Although highly hardware-dependent, the simulation with ```--time_ignoring_only``` takes 10-45 minutes, with ```--time_respecting_only``` 8-24 hours. 
+Although highly hardware-dependent, please plan for the simulation run with ```--time_ignoring_only``` 10-45 minutes and with ```--time_respecting_only``` 8-24 hours. 
 
 
 ## Tests and verification
@@ -39,7 +39,7 @@ The outputs are reproducible and hashable: Verify the files by using hashes such
 To verify the results run
 
 ```
-shasum -a 256 simulation/data/time_*.json                      
+shasum -a 256 data/time_*.json                      
 ```
 and compare the hash values of our results:
 
@@ -49,7 +49,6 @@ d455f1e37237014830fa9aaca76232594c92c193c241b71ca28ec69969163daf  simulation/dat
 a07356ef7bf8b8af152e95857c39cbb8138c63ad110f455a309083545b94cbb5  simulation/data/time_respecting_horizon_cardinalities.json
 8722f82d2cb9e1c1947baa3c8ff9239d2faed6deae56469114a364e2c2649832  simulation/data/time_respecting_horizons.json
 ```
-
 
 
 ## Design decisions
