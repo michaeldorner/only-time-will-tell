@@ -6,17 +6,17 @@
 [![GitHub](https://img.shields.io/github/license/michaeldorner/only-time-will-tell)](./LICENSE)
 [![GitHub](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.5568875-brightgreen)](https://zenodo.org/record/5568875)
 
-The simulation code for the publication "Only Time Will Tell: Only Time Will Tell: Modelling Communication for Information Diffusion in Software Engineering"
+The simulation code for the publication "Only Time Will Tell: Modelling Information Diffusion in Code Review With Time-Varying Hypergraphs"
 
 
 ## Data
 
-Our results can be found on Zenodo. 
+Our results can be found on [Zenodo](https://zenodo.org/deposit/5568875). 
 
 
 ## Prerequisites
 
-We recommend at least 50 GB storage, minimum 16 GB RAM, and a powerful CPU for the running the full simulation (for options see next section). We require Python 3.7 or higher. Install all dependencies via ```pip3 install -r requirements.txt```. 
+We recommend at least 50 GB storage, minimum 16 GB RAM, and a powerful CPU for the running the full simulation (for options see next section). We require Python 3.8 or higher. Install all dependencies via ```pip3 install -r requirements.txt```. 
 
 If you would like to create or change the plots, please install and use `jupyter`.
 
@@ -66,9 +66,10 @@ We use JSON to store our simulation results despite its limitation (i.e., no nat
 ```
 import json
 
+path = ...
 prefix = 'time_ignoring' # or 'time_respecting' 
 
-with open(prefix + '_horizons.json', 'r') as f:
+with open(path + prefix + '_horizons.json', 'r') as f:
     data = json.load(f)
 ```
 
@@ -85,9 +86,11 @@ We recommend `tqdm` to show a progress bar. Feel free to replace `tqdm.tqdm(data
 
 ```
 import json
+
+path = ...
 prefix = 'time_ignoring' # or 'time_respecting' 
 
-with open(prefix + '_horizons.json', 'r') as f:
+with open(path + prefix + '_horizons.json', 'r') as f:
     data = json.load(f)
   
 with open(prefix + '_horizon_cardinalities.json', 'w') as f:
