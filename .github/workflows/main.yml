@@ -19,7 +19,7 @@ jobs:
         pip install coverage networkx orjson tqdm
         coverage run -m unittest discover
         coverage xml
-      working-directory: ./
+      working-directory: ${GITHUB_WORKSPACE}
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:
