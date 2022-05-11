@@ -5,12 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OS: ubuntu-latest
-      PYTHON: '3.8'
+      PYTHON: '3.10.4'
     steps:
     - name: Setup Python
       uses: actions/setup-python@master
       with:
-        python-version: 3.8
+        python-version: '3.10.4'
     - name: Checkout
       uses: actions/checkout@master
     - name: Generate Report
@@ -19,6 +19,7 @@ jobs:
         pip install coverage networkx orjson tqdm
         coverage run -m unittest discover
         coverage xml
+      working-directory: ./
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v2
       with:
