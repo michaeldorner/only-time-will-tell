@@ -28,11 +28,12 @@ class DecodeResultTest(unittest.TestCase):
 class StoreResultTest(unittest.TestCase):
     def setUp(self):
         super().setUp()
+        print(os.getcwd())
         self.test_file_path = Path('results') / 'test.json'
 
     def test_store_result(self):
         store.to_json({'a': set()}, 'test.json')
-        with open(self.test_file_path, 'r') as f:
+        with open(self.test_file_path, 'r', encoding='utf8') as f:
             content = f.read()
         self.assertEqual(content, '{"a":{}}')
 
