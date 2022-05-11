@@ -45,10 +45,7 @@ shasum -a 256 results/*.json
 and compare the hash values of our results:
 
 ```
-4a6b2e596f24a3f00784851789cc0244f3688c1a01316e0aef96b0b7add233a3 results/time_ignoring_reachables.json
-d455f1e37237014830fa9aaca76232594c92c193c241b71ca28ec69969163daf results/time_ignoring_horizons.json
-a07356ef7bf8b8af152e95857c39cbb8138c63ad110f455a309083545b94cbb5 results/time_respecting_horizon_cardinalities.json
-8722f82d2cb9e1c1947baa3c8ff9239d2faed6deae56469114a364e2c2649832 results/time_respecting_horizons.json
+UPLOAD IN PROGRESS
 ```
 
 
