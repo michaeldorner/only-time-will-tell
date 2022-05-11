@@ -11,7 +11,8 @@ if __name__ == '__main__':
                         help='Simulate the time-respecting model only.')
     parser.add_argument('--skip_storing_reachable', action='store_true',
                         help='Do not store the all reachable participants \
-                            as JSON before calculating the cardinalities. This saves about 50 GB.')
+                            as JSON before calculating the cardinalities. \
+                            This saves about 50 GB on your disk.')
 
     args = parser.parse_args()
 
@@ -27,14 +28,14 @@ if __name__ == '__main__':
 
     for consider_time in simulation_runs:
         if consider_time:
-            result = run.simulation_respecting_time(cn, cache=True)
+            reachables = run.simulation_respecting_time(cn, cache=True)
             file_prefix = 'time_respecting'
         else:
-            result = run.simulation_ignoring_time(cn)
+            reachables = run.simulation_ignoring_time(cn)
             file_prefix = 'time_ignoring'
 
         if args.skip_storing_reachable is False:
-            store.store(result, f'{file_prefix}_reachable_participants.json')
+            store.store(reachables, f'{file_prefix}_reachables.json')
 
-        upper_bound = {v: len(reachable) for v, reachable in result.items()}
+        upper_bound = {v: len(reachable) for v, reachable in reachables.items()}
         store.store(upper_bound, f'{file_prefix}_upper_bound.json')
