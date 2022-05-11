@@ -12,6 +12,9 @@ def decode_result(result: dict) -> bytes:
 
 
 def to_json(result, file_name):
-    file_path = Path('results').absolute() / file_name
+    results_folder = Path('results')
+    results_folder.mkdir(exist_ok=True)
+    file_path = results_folder / file_name
+
     with open(file_path, 'wb') as file:
         file.write(decode_result(result))

@@ -1,7 +1,7 @@
 import unittest
-from simulation import store
 from pathlib import Path
-import os
+
+from simulation import store
 
 
 class DecodeResultTest(unittest.TestCase):
@@ -28,14 +28,13 @@ class DecodeResultTest(unittest.TestCase):
 class StoreResultTest(unittest.TestCase):
     def setUp(self):
         super().setUp()
-        self.test_file_path = Path('results').absolute() / 'test.json'
+        self.test_file_path = Path('results') / 'test.json'
 
     def test_store_result(self):
         store.to_json({'a': set()}, 'test.json')
-        with open(self.test_file_path, 'r', encoding='utf8') as f:
-            content = f.read()
+        with open(self.test_file_path, 'r', encoding='utf8') as file:
+            content = file.read()
         self.assertEqual(content, '{"a":{}}')
 
     def tearDown(self):
-        if self.test_file_path.exists():
-            os.remove(self.test_file_path)
+        self.test_file_path.unlink(missing_ok=True)
