@@ -28,7 +28,7 @@ If you want to create or change the plots, please install and use `jupyter`.
 3. run `pip3 install -r requirements.txt`
 4. `python3 -m simulation` to run the simulation. With the optional ```--time_ignoring_only``` and ```--time_respecting_only``` you can run the simulation with the time-ignoring model or time-respecting model, respectively.
 
-Although highly hardware-dependent, please plan for the simulation run with ```--time_ignoring_only``` 10-20 minutes and with ```--time_respecting_only``` 2-8 hours. The option ```--skip_storing_reachables``` saves you about 50 GB of data and about 10-20 minutes of the time. 
+Although highly hardware-dependent, we recommend to plan for the simulation run to take 10-20 min with ```--time_ignoring_only``` and 2-4 hours with ```--time_respecting_only```. The option ```--skip_storing_reachables``` saves you about 50 GB of data and about 10-20 minutes of the time.
 
 
 ## Tests and verification
