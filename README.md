@@ -45,7 +45,10 @@ shasum -a 256 results/*.json
 and compare the hash values of our results:
 
 ```
-UPLOAD IN PROGRESS
+d455f1e37237014830fa9aaca76232594c92c193c241b71ca28ec69969163daf  results/time_ignoring_reachables.json
+4a6b2e596f24a3f00784851789cc0244f3688c1a01316e0aef96b0b7add233a3  results/time_ignoring_upper_bound.json
+be3c8358754cfa4cf04137b941b280ac587770fd6c70c6383b78a0e196e5a63b  results/time_respecting_reachables.json
+8f77979c99935f6b992f8e2f732af55d06ddcdf2b02cc1d22acc49933675c0a9  results/time_respecting_upper_bound.json
 ```
 
 
