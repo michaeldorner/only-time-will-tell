@@ -1,21 +1,103 @@
+from datetime import datetime
+from functools import cache
+
+import orjson
 import networkx as nx
 
 
-class CommunicationNetwork(nx.Graph):
+class Hypergraph:
 
-    def __init__(self, data: dict):
-        super().__init__()
+    def __init__(self, hedge_vertices: dict, hedges_data=None, vertices_data=None):
+        self._vertices = set()
+        self._hyperedges = set()
+        for hedge, vertices in hedge_vertices.items():
+            self._vertices.update(vertices)
+            self._hyperedges.add(hedge)
 
-        self.participants = {participant for channel in data.values()
-                             for participant in channel['participants']}
-        self.channels = set(data.keys())
+        self._bipartite_graph = nx.Graph()
 
-        self.add_nodes_from(
-            self.participants, bipartite='participants')
-        self.add_nodes_from(self.channels, bipartite='channels')
+        self._bipartite_graph.add_nodes_from(
+            self._vertices, bipartite='vertex')
+        self._bipartite_graph.add_nodes_from(
+            self._hyperedges, bipartite='hyperedge')
 
-        for channel_id, channel in data.items():
-            self.nodes[channel_id]['start'] = channel['start']
-            self.nodes[channel_id]['end'] = channel['end']
-            for p in channel['participants']:
-                self.add_edge(p, channel_id)
+        if hedges_data:
+            assert not (set(hedges_data.keys()) - self._hyperedges), 'hedge_data contain non-hyperedges'
+            nx.set_node_attributes(self._bipartite_graph, hedges_data)
+
+        if vertices_data:
+            assert not (set(vertices_data) - self._vertices), 'vertices_data contain non-vertices'
+            nx.set_node_attributes(self._bipartite_graph, vertices_data)
+
+        for hedge, vertices in hedge_vertices.items():
+            for vertex in vertices:
+                self._bipartite_graph.add_edge(vertex, hedge)
+
+    @cache
+    def get_hedge_data(self, distance_attribute, hedge=None):
+        if hedge:
+            return self._bipartite_graph.nodes[hedge][distance_attribute]
+        else:
+            return {hedge: self._bipartite_graph.nodes[hedge][distance_attribute]
+                    for hedge in self._hyperedges}
+
+    @cache
+    def hyperedges(self, vertex=None):
+        if vertex:
+            return set(self._bipartite_graph[vertex])
+        return set(self._hyperedges)
+
+    @cache
+    def vertices(self, hedge=None):
+        if hedge:
+            return set(self._bipartite_graph[hedge])
+        return set(self._vertices)
+
+    @cache
+    def hyperedge_neighbors(self, hedge=None, distance_attr=None, filter_distance=lambda distance: False):
+        if hedge:
+            connected_hedges: set = set()
+            for vertex in self.vertices(hedge):
+                for next_hedge in self.hyperedges(vertex):
+                    if distance_attr:
+                        distance = self.get_hedge_data(distance_attr, next_hedge) - \
+                            self.get_hedge_data(distance_attr, hedge)
+                    else:
+                        distance = None
+                    if not filter_distance(distance):
+                        connected_hedges.add(next_hedge)
+            return connected_hedges - {hedge}
+        else:
+            connected_hedges: dict = {}
+            for hedge in self.hyperedges():
+                connected_hedges[hedge] = self.hyperedge_neighbors(hedge, distance_attr, filter_distance)
+            return connected_hedges
+
+
+class CommunicationNetwork(Hypergraph):
+
+    def __init__(self, channel_dict, channel_data=None, name=None):
+        super().__init__(channel_dict, channel_data)
+        self.name = name
+
+    def channels(self, participant=None):
+        return self.hyperedges(participant)
+
+    def participants(self, channel=None):
+        return self.vertices(channel)
+
+    def channel_neighbors(self, hedge=None, time_attr=None, filter_distance=lambda distance: False):
+        return self.hyperedge_neighbors(hedge, time_attr, filter_distance)
+
+    @classmethod
+    def from_json(cls, file_path: str, name=None):
+        with open(file_path, 'r', encoding='utf8') as json_file:
+            raw_data = orjson.loads(json_file.read())  # pylint: disable=maybe-no-member
+        hedge_dict = {chan_id: {
+            str(p) for p in channel['participants']} for chan_id, channel in raw_data.items()}
+        hedge_data = {chan_id: {
+            'start': datetime.fromisoformat(channel['start']),
+            'end': datetime.fromisoformat(channel['end']),
+        } for chan_id, channel in raw_data.items()}
+
+        return cls(hedge_dict, hedge_data, name=name)

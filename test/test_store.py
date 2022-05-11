@@ -1,26 +1,10 @@
 import unittest
-from simulation import io
+from simulation import store
 from pathlib import Path
 import os
 
 
-class IODirectoryValidationTest(unittest.TestCase):
-    def test_invalid_file(self):
-        self.assertRaises(FileNotFoundError,
-                          io.validate_file, '0.json')
-
-    def test_valid_file(self):
-        self.assertEqual(io.validate_file(__file__), Path(__file__).absolute())
-
-    def test_invalid_directory(self):
-        self.assertRaises(NotADirectoryError,
-                          io.validate_directory, '0')
-
-    def test_valid_directory(self):
-        self.assertEqual(io.validate_directory('.'), Path('.').absolute())
-
-
-class IODecodeResultTest(unittest.TestCase):
+class DecodeResultTest(unittest.TestCase):
     def test_decode_result(self):
         mapping = [
             (0, {'a': {'b', 'c'}, 'd': set()},
@@ -37,18 +21,17 @@ class IODecodeResultTest(unittest.TestCase):
 
         for i, result, reference in mapping:
             with self.subTest(i=i):
-                b = io.decode_result(result)
+                b = store._decode_result(result)
                 self.assertEqual(b, reference)
 
 
-class IOStoreResultTest(unittest.TestCase):
+class StoreResultTest(unittest.TestCase):
     def setUp(self):
         super().setUp()
-        self.test_file_path = Path('./time_respecting_test.json').absolute()
+        self.test_file_path = Path('results') / 'test.json'
 
     def test_store_result(self):
-        postfix_name = 'test.json'
-        io.store_result({'a': set()}, './', True, postfix_name)
+        store.to_json({'a': set()}, 'test.json')
         with open(self.test_file_path, 'r') as f:
             content = f.read()
         self.assertEqual(content, '{"a":{}}')
