@@ -35,7 +35,7 @@ if __name__ == '__main__':
             file_prefix = 'time_ignoring'
 
         if args.skip_storing_reachable is False:
-            store.store(reachables, f'{file_prefix}_reachables.json')
+            store.to_json(reachables, f'{file_prefix}_reachables.json')
 
         upper_bound = {v: len(reachable) for v, reachable in reachables.items()}
-        store.store(upper_bound, f'{file_prefix}_upper_bound.json')
+        store.to_json(upper_bound, f'{file_prefix}_upper_bound.json')
