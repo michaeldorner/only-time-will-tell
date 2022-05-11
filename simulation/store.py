@@ -12,6 +12,6 @@ def decode_result(result: dict) -> bytes:
 
 
 def to_json(result, file_name):
-    file_path = Path('results') / file_name
+    file_path = Path('results').absolute() / file_name
     with open(file_path, 'wb') as file:
         file.write(decode_result(result))

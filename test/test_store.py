@@ -28,8 +28,7 @@ class DecodeResultTest(unittest.TestCase):
 class StoreResultTest(unittest.TestCase):
     def setUp(self):
         super().setUp()
-        print(os.getcwd())
-        self.test_file_path = Path('results') / 'test.json'
+        self.test_file_path = Path('results').absolute() / 'test.json'
 
     def test_store_result(self):
         store.to_json({'a': set()}, 'test.json')
