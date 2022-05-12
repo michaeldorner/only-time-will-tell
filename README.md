@@ -6,7 +6,7 @@
 [![GitHub](https://img.shields.io/github/license/michaeldorner/only-time-will-tell)](./LICENSE)
 [![GitHub](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.5568875-brightgreen)](https://zenodo.org/record/5568875)
 
-The simulation code for the publication "Only Time Will Tell: Modelling Information Diffusion in Code Review With Time-Varying Hypergraphs"
+Simulation code for the publication "Only Time Will Tell: Modelling Information Diffusion in Code Review With Time-Varying Hypergraphs"
 
 
 ## Data
@@ -16,9 +16,9 @@ The results of the simulation can be found on [Zenodo](https://zenodo.org/deposi
 
 ## Prerequisites
 
-We recommend at least 50 GB storage, minimum 16 GB RAM, and a powerful CPU for the running the full simulation (for options see next section). We require Python 3.8 or higher. Install all dependencies via ```pip3 install -r requirements.txt```. 
+We recommend at least 50 GB storage, 16 GB RAM, and a powerful CPU for running the entire simulation (for options, see next section). We require Python 3.9 or higher since we heavily rely on [```functools.cache```](https://docs.python.org/3/library/functools.html#functools.cache) which is not available in earlier versions but improves the computational performance. Install all dependencies via ```pip3 install -r requirements.txt```. 
 
-If you would like to create or change the plots, please install and use `jupyter`.
+If you want to create or change the plots, please install and use `jupyter`.
 
 
 ## Run simulation
@@ -28,72 +28,36 @@ If you would like to create or change the plots, please install and use `jupyter
 3. run `pip3 install -r requirements.txt`
 4. `python3 -m simulation` to run the simulation. With the optional ```--time_ignoring_only``` and ```--time_respecting_only``` you can run the simulation with the time-ignoring model or time-respecting model, respectively.
 
-Although highly hardware-dependent, please plan for the simulation run with ```--time_ignoring_only``` 10-45 minutes and with ```--time_respecting_only``` 8-24 hours. 
+Although highly hardware-dependent, we recommend to plan for the simulation run to take 10-20 min with ```--time_ignoring_only``` and 2-4 hours with ```--time_respecting_only```. The option ```--skip_storing_reachables``` saves you about 50 GB of data on your local driev and about 10-20 minutes of the time.
 
 
 ## Tests and verification
 
 `python3 -m unittest discover` runs all tests. 
 
-The outputs are reproducible and hashable: Verify the files by using hashes such as SHA256. The plots can be reproduced by the jupyter notebook in the folder `notebooks`. 
+The outputs are reproducible and hashable: Verify the files using hashes such as SHA256. The plots can be reproduced by the jupyter notebook in the folder `notebooks`. 
 
-To verify the results run
+To verify the results, run
 
 ```
-shasum -a 256 data/time_*.json                      
+shasum -a 256 results/*.json                      
 ```
 and compare the hash values of our results:
 
 ```
-4a6b2e596f24a3f00784851789cc0244f3688c1a01316e0aef96b0b7add233a3 data/time_ignoring_horizon_cardinalities.json
-d455f1e37237014830fa9aaca76232594c92c193c241b71ca28ec69969163daf data/time_ignoring_horizons.json
-a07356ef7bf8b8af152e95857c39cbb8138c63ad110f455a309083545b94cbb5 data/time_respecting_horizon_cardinalities.json
-8722f82d2cb9e1c1947baa3c8ff9239d2faed6deae56469114a364e2c2649832 data/time_respecting_horizons.json
+d455f1e37237014830fa9aaca76232594c92c193c241b71ca28ec69969163daf  results/time_ignoring_reachables.json
+4a6b2e596f24a3f00784851789cc0244f3688c1a01316e0aef96b0b7add233a3  results/time_ignoring_upper_bound.json
+be3c8358754cfa4cf04137b941b280ac587770fd6c70c6383b78a0e196e5a63b  results/time_respecting_reachables.json
+8f77979c99935f6b992f8e2f732af55d06ddcdf2b02cc1d22acc49933675c0a9  results/time_respecting_upper_bound.json
 ```
 
 
 ## Design decisions
 
-All computations and simulations are executable Python scripts that allow test the code thoroughly and run it quickly via the command line. Only the visualization is a jupyter notebook and not covered by our test setup.
+All computations and simulations are packed into a executable Python module that allow testing the code thoroughly and running it quickly via the command line. Only the visualization is a jupyter notebook and not covered by our test setup.
 
 We use JSON to store our simulation results despite its limitation (i.e., no native time or set type) because it is widely adopted and allows dictionary-like data (in contrast to table-like data formats such as HDF5 or Apache Arrow). We decide against Python's internal serialization module pickle due to its inherent security issues and lousy performance. Since JSON does not support sets, we used JSON objects mapping to none for time-ignoring horizons and to strings representing the timestamp in ISO format for time-respecting horizons.
 
+To improve performance, we heavily rely on caching via [```functools.cache```](https://docs.python.org/3/library/functools.html#functools.cache). This makes the data structures (```CommunicationNetwork``` and ```Hypergraph```) very efficient without boilerplate code but not modifiable after creation. 
 
-## Code snippets
-
-### Load horizon
-
-```
-import json
-
-path = ...
-prefix = 'time_ignoring' # or 'time_respecting' 
-
-with open(path + prefix + '_horizons.json', 'r') as f:
-    data = json.load(f)
-```
-
-The data so far is not typed. We highly recommend to use typed data:
-
-```
-import datetime
-
-horizons = {n: {l: datetime.datetime.fromisoformat(data[n][l]) for l in data[n]} for n in tqdm.tqdm(data)}
-```
-We recommend `tqdm` to show a progress bar. Feel free to replace `tqdm.tqdm(data)` with `data` only otherwise.  
-
-### Store the horizon to cardinality
-
-```
-import json
-
-path = ...
-prefix = 'time_ignoring' # or 'time_respecting' 
-
-with open(path + prefix + '_horizons.json', 'r') as f:
-    data = json.load(f)
-  
-with open(prefix + '_horizon_cardinalities.json', 'w') as f:
-    json.dump({k: len(data[k]) for k in data}, f)
-```
-
+At the current state, we do not support multiple cores since the whole graph is kept in memory (about 100 GB peak memory footprint) which causes performance issues on Windows and macOS due to their restriction on [COW](https://en.wikipedia.org/wiki/Copy-on-write) and process forking. Please find more information [here](https://bugs.python.org/issue33725) and [here](https://docs.python.org/3.10/library/multiprocessing.html#contexts-and-start-methods). 
