@@ -21,8 +21,8 @@ class DecodeResultTest(unittest.TestCase):
 
         for i, result, reference in mapping:
             with self.subTest(i=i):
-                b = store.decode_result(result)
-                self.assertEqual(b, reference)
+                encoded_result = store.decode_result(result)
+                self.assertEqual(encoded_result, reference)
 
 
 class StoreResultTest(unittest.TestCase):
