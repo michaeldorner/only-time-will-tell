@@ -21,12 +21,9 @@ def simulation_ignoring_time(communication_network: CommunicationNetwork, show_p
     return result
 
 
-def simulation_respecting_time(communication_network: CommunicationNetwork, cache=False, show_progress=True):
+def simulation_respecting_time(communication_network: CommunicationNetwork, show_progress=True):
     disable = not show_progress
     def filter_distance(distance): return distance <= timedelta(seconds=0)
-    if cache:
-        for channel in tqdm(communication_network.channels(), desc='Caching channel neighbors', disable=disable):
-            communication_network.channel_neighbors(channel, 'end', filter_distance)
     result = {}
     for participant in tqdm(communication_network.participants(), desc='Simulating respecting time', disable=disable):
         result[participant] = bfs(communication_network, participant, 'end', filter_distance)

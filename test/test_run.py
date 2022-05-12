@@ -31,7 +31,7 @@ class SimulationRunTest(unittest.TestCase):
             self.assertEqual(result, expected)
 
         with self.subTest():
-            result = run.simulation_respecting_time(self.cn, cache=True, show_progress=False)
+            result = run.simulation_respecting_time(self.cn, show_progress=False)
             expected = {'v1': {'v1', 'v2', 'v3', 'v4'},
                         'v3': {'v2', 'v3', 'v4'},
                         'v2': {'v1', 'v2', 'v3', 'v4'},
