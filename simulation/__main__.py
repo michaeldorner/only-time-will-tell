@@ -2,6 +2,11 @@ import argparse
 
 from simulation import run, model, store
 
+FILE_PREFIX = {
+    True: 'time_respecting',
+    False: 'time_ignoring'
+}
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
 
@@ -24,18 +29,19 @@ if __name__ == '__main__':
     elif not args.time_ignoring_only and args.time_respecting_only:
         simulation_runs = [True]
 
-    cn = model.CommunicationNetwork.from_json('data/simulation_parameters.json')
+    microsoft_code_review = model.CommunicationNetwork.from_json('data/microsoft_code_review.json')
 
     for consider_time in simulation_runs:
+        reachables = {}
         if consider_time:
-            reachables = run.simulation_respecting_time(cn, cache=True)
-            file_prefix = 'time_respecting'
+            reachables = run.simulation_respecting_time(microsoft_code_review)
         else:
-            reachables = run.simulation_ignoring_time(cn)
-            file_prefix = 'time_ignoring'
+            reachables = run.simulation_ignoring_time(microsoft_code_review)
 
         if args.skip_storing_reachables is False:
-            store.to_json(reachables, f'{file_prefix}_reachables.json')
+            store.to_json(reachables, f'{FILE_PREFIX[consider_time]}_reachables.json')
 
         upper_bound = {v: len(reachable) for v, reachable in reachables.items()}
-        store.to_json(upper_bound, f'{file_prefix}_upper_bound.json')
+        store.to_json(upper_bound, f'{FILE_PREFIX[consider_time]}_upper_bound.json')
+        reachables = {}
+        upper_bound = {}
