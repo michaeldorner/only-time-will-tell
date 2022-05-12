@@ -53,26 +53,6 @@ class Hypergraph:
             return set(self._bipartite_graph[hedge])
         return set(self._vertices)
 
-    @cache
-    def hyperedge_neighbors(self, hedge=None, distance_attr=None, filter_distance=lambda distance: False):
-        if hedge:
-            connected_hedges: set = set()
-            for vertex in self.vertices(hedge):
-                for next_hedge in self.hyperedges(vertex):
-                    if distance_attr:
-                        distance = self.get_hedge_data(distance_attr, next_hedge) - \
-                            self.get_hedge_data(distance_attr, hedge)
-                    else:
-                        distance = None
-                    if not filter_distance(distance):
-                        connected_hedges.add(next_hedge)
-            return connected_hedges - {hedge}
-        else:
-            connected_hedges: dict = {}
-            for hedge in self.hyperedges():
-                connected_hedges[hedge] = self.hyperedge_neighbors(hedge, distance_attr, filter_distance)
-            return connected_hedges
-
 
 class CommunicationNetwork(Hypergraph):
 
@@ -85,9 +65,6 @@ class CommunicationNetwork(Hypergraph):
 
     def participants(self, channel=None):
         return self.vertices(channel)
-
-    def channel_neighbors(self, hedge=None, time_attr=None, filter_distance=lambda distance: False):
-        return self.hyperedge_neighbors(hedge, time_attr, filter_distance)
 
     @classmethod
     def from_json(cls, file_path: str, name=None):
