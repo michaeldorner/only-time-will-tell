@@ -16,7 +16,7 @@ The results of the simulation can be found on [Zenodo](https://zenodo.org/deposi
 
 ## Prerequisites
 
-We recommend at least 50 GB storage, 16 GB RAM, and a powerful CPU for running the entire simulation (for options, see next section). We require Python 3.8 or higher. Install all dependencies via ```pip3 install -r requirements.txt```. 
+The simulation requires at least 50 GB storage, 16 GB RAM, and a powerful CPU for running the entire simulation (for options, see next section). We require Python 3.8 or higher. Install all dependencies via ```pip3 install -r requirements.txt```. We recommend 64 GB RAM and Python 3.9 or later. 
 
 If you want to create or change the plots, please install and use `jupyter`.
 
@@ -56,6 +56,6 @@ be3c8358754cfa4cf04137b941b280ac587770fd6c70c6383b78a0e196e5a63b  results/time_r
 
 All computations and simulations are packed into a executable Python module that allow testing the code thoroughly and running it quickly via the command line. Only the visualization is a jupyter notebook and not covered by our test setup.
 
-We use JSON to store our simulation results despite its limitation (i.e., no native time or set type) because it is widely adopted and allows dictionary-like data (in contrast to table-like data formats such as HDF5 or Apache Arrow). We decide against Python's internal serialization module pickle due to its inherent security issues and lousy performance. Since JSON does not support sets, we use sorted arrays for the reachables.
+We use JSON to store our simulation results despite its limitation (i.e., no native time or set type) because it is widely adopted and allows dictionary-like data (in contrast to table-like data formats such as HDF5 or Apache Arrow). We decide against Python's internal serialization module pickle due to its inherent security issues and lousy performance. Since JSON does not support sets, we use sorted arrays for the reachables. Writing an adjacency matrix as CSV is a magnitude slower than our approach. 
 
 At the current state, we do not support multiple cores since the whole graph is kept in memory (about 100 GB peak memory footprint) which causes performance issues on Windows and macOS due to their restriction on [COW](https://en.wikipedia.org/wiki/Copy-on-write) and process forking. Please find more information [here](https://bugs.python.org/issue33725) and [here](https://docs.python.org/3.10/library/multiprocessing.html#contexts-and-start-methods). 
