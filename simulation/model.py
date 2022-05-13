@@ -1,5 +1,4 @@
 from datetime import datetime
-from functools import cache
 
 import orjson
 import networkx as nx
@@ -33,7 +32,6 @@ class Hypergraph:
             for vertex in vertices:
                 self._bipartite_graph.add_edge(vertex, hedge)
 
-    @cache
     def get_hedge_data(self, distance_attribute, hedge=None):
         if hedge:
             return self._bipartite_graph.nodes[hedge][distance_attribute]
@@ -41,13 +39,11 @@ class Hypergraph:
             return {hedge: self._bipartite_graph.nodes[hedge][distance_attribute]
                     for hedge in self._hyperedges}
 
-    @cache
     def hyperedges(self, vertex=None):
         if vertex:
             return set(self._bipartite_graph[vertex])
         return set(self._hyperedges)
 
-    @cache
     def vertices(self, hedge=None):
         if hedge:
             return set(self._bipartite_graph[hedge])
