@@ -68,5 +68,5 @@ def simulation_respecting_time(communication_network: CommunicationNetwork, show
 
     result = {}
     for participant in tqdm(participants, desc='Simulating respecting time', disable=disable):
-        result[participant] = bfs(channel_participants, participant_channels, available_channels, participant)
+        result[participant] = bfs(channel_participants, participant_channels, available_channels, participant) - {participant}
     return result
