@@ -16,7 +16,7 @@ The results of the simulation can be found on [Zenodo](https://zenodo.org/deposi
 
 ## Prerequisites
 
-The simulation requires at least 50 GB storage, 16 GB RAM, and a powerful CPU for running the entire simulation (for options, see next section). We require Python 3.8 or higher. Install all dependencies via ```pip3 install -r requirements.txt```. We recommend 64 GB RAM and Python 3.9 or later. 
+The simulation requires at least 50 GB storage, 16 GB RAM, a powerful CPU for running the entire simulation (for options, see next section), and Python 3.8 or higher. Install all dependencies via ```pip3 install -r requirements.txt```. We highly recommend 64 GB RAM and Python 3.9 or later. 
 
 If you want to create or change the plots, please install and use `jupyter`.
 
