@@ -25,10 +25,10 @@ class SimulationRunTest(unittest.TestCase):
 
     def test_run_simulation_respecting_time(self):
         result = run.simulation_respecting_time(self.cn, show_progress=False)
-        expected = {'v1': {'v1', 'v2', 'v3', 'v4'},
-                    'v3': {'v2', 'v3', 'v4'},
-                    'v2': {'v1', 'v2', 'v3', 'v4'},
-                    'v4': {'v3', 'v4'}}
+        expected = {'v1': {'v2', 'v3', 'v4'},
+                    'v3': {'v2', 'v4'},
+                    'v2': {'v1', 'v3', 'v4'},
+                    'v4': {'v3'}}
         self.assertEqual(result, expected)
 
 
