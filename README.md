@@ -33,9 +33,9 @@ If you want to create or change the plots, please install and use `jupyter`.
 1. Download or pull this repository
 2. `cd only-time-will-tell` (or the directory it is located)
 3. run `pip3 install -r requirements.txt`
-4. `python3 -m simulation` to run the simulation. With the optional <nobr>```--time_ignoring_only```</nobr> and <nobr>```--time_respecting_only```</nobr> you can run the simulation with the time-ignoring model or time-respecting model, respectively.
+4. `python3 -m simulation` to run the simulation. With the optional ```--time_ignoring_only``` and ```--time_respecting_only``` you can run the simulation with the time-ignoring model or time-respecting model, respectively.
 
-Although highly hardware-dependent, we recommend to plan for the simulation run to take 10-20 min with <nobr>```--time_ignoring_only```</nobr> and 2-4 hours with <nobr>```--time_respecting_only```</nobr> at least. The option <nobr>```--skip_storing_reachables```</nobr> saves you about 50 GB of data on your local drive and about 10-20 minutes of the time but also does not allow you to check those intermediate results. 
+Although highly hardware-dependent, we recommend to plan for the simulation run to take 10-20 min with ```--time_ignoring_only``` and 2-4 hours with ```--time_respecting_only``` at least. The option ```--skip_storing_reachables``` saves you about 50 GB of data on your local drive and about 10-20 minutes of the time but also does not allow you to check those intermediate results. 
 
 
 ## Tests and verification
