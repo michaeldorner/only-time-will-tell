@@ -11,8 +11,7 @@ Simulation code for the publication "Only Time Will Tell: Modelling Information 
 
 
 ## Data
-
-The results of the simulation can be found on [Zenodo](https://zenodo.org/deposit/5568875). 
+The results of the simulation can be found on [Zenodo](https://doi.org/10.5281/zenodo.6542540). 
 
 
 ## Prerequisites
