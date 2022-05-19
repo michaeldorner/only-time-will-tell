@@ -6,7 +6,6 @@
 [![GitHub](https://img.shields.io/github/license/michaeldorner/only-time-will-tell)](./LICENSE)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6542540.svg)](https://doi.org/10.5281/zenodo.6542540)
 
-
 Simulation code for the publication "Only Time Will Tell: Modelling Information Diffusion in Code Review With Time-Varying Hypergraphs"
 
 
@@ -23,7 +22,7 @@ The simulation requires
 * a powerful CPU for running the entire simulation (for options, see next section), and
 * Python 3.8 or higher with the dependencies specified in `requirements.txt` which can be via ```pip3 install -r requirements.txt```
 
-However, we highly recommend significant more resoruces and Python 3.9 or later. 
+However, we highly recommend significantly more resources and Python 3.9 or later.
 
 If you want to create or change the plots, please install and use `jupyter`.
 
