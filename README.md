@@ -20,7 +20,7 @@ The simulation requires
 * at least 50 GB storage, 
 * 16 GB RAM,
 * a powerful CPU for running the entire simulation (for options, see next section), and
-* Python 3.8 or higher with the dependencies specified in `requirements.txt` which can be via ```pip3 install -r requirements.txt```
+* Python 3.8 or higher with the dependencies specified in `requirements.txt` (installed via ```pip3 install -r requirements.txt```)
 
 However, we highly recommend significantly more resources and Python 3.9 or later.
 
