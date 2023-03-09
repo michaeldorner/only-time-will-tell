@@ -10,6 +10,8 @@
 
 Simulation code for the publication "Only Time Will Tell: Modelling Information Diffusion in Code Review With Time-Varying Hypergraphs"
 
+🏆🏆🏆**ESEM Best Paper Award 2022**🏆🏆🏆
+
 
 ## Data
 The results of the simulation can be found on [Zenodo](https://doi.org/10.5281/zenodo.6542540). 
