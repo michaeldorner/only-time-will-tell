@@ -6,9 +6,9 @@
 [![GitHub](https://img.shields.io/github/license/michaeldorner/only-time-will-tell)](./LICENSE)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6542540.svg)](https://doi.org/10.5281/zenodo.6542540)
 [![DOI](https://zenodo.org/badge/406830986.svg)](https://zenodo.org/badge/latestdoi/406830986)
+[![DOI](https://zenodo.org/badge/DOI/10.1145/3544902.3546254.svg)](https://doi.org/10.1145/3544902.3546254)
 
-
-Simulation code for the publication "Only Time Will Tell: Modelling Information Diffusion in Code Review With Time-Varying Hypergraphs"
+Simulation code for the publication "[Only Time Will Tell: Modelling Information Diffusion in Code Review With Time-Varying Hypergraphs](https://doi.org/10.1145/3544902.3546254)"
 
 🏆🏆🏆**ESEM Best Paper Award 2022**🏆🏆🏆
 
